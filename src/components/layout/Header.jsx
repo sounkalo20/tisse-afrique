@@ -44,19 +44,11 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Image 
-              src="/logo.png" 
-              alt="Logo Mali Mode" 
-              width={40} 
-              height={40} 
-              className="rounded-full border"
-              style={{ borderColor: colors.gold }}
+              src="/hk2.png" 
+              alt="Logo HK Style" 
+              width={130} 
+              height={130} 
             />
-            <span 
-              className="text-xl font-bold hidden sm:block"
-              style={{ color: colors.dark }}
-            >
-              Mali Mode
-            </span>
           </Link>
 
           {/* Navigation Desktop */}
