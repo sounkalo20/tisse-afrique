@@ -13,13 +13,13 @@ function Footer() {
         <div className="lg:col-span-2">
           <div className="flex items-center mb-4">
             <Image 
-              src="/logo.png" 
+              src="/hk2.png" 
               alt="Mali Mode" 
               width={40} 
               height={40} 
               className="mr-2"
             />
-            <h3 className="text-xl font-bold" style={{ color: "#D4AF37" }}>Mali Mode</h3>
+            <h3 className="text-xl font-bold" style={{ color: "#D4AF37" }}>HK STYLE</h3>
           </div>
           <p className="text-sm mb-6" style={{ color: "#FDF8F2", opacity: 0.8 }}>
             Votre destination pour une mode africaine authentique et élégante, inspirée par la richesse culturelle du Mali.
