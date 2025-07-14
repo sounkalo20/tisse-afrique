@@ -112,11 +112,7 @@ function Footer() {
       <div className="border-t border-white/10 pt-8 pb-6">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex gap-4 flex-wrap justify-center">
-              <Image src="/images/OM.png" alt="Orange Money" width={80} height={25} className=" p-1 rounded" />
-              <Image src="/images/Moov_Money.png" alt="Moov Money" width={80} height={25} className=" p-1 rounded" />
-              <Image src="/images/wave.png" alt="Wave" width={80} height={25} className=" p-1 rounded" />
-            </div>
+            
 
             <div className="text-center md:text-right">
               <p className="text-xs" style={{ color: "#FDF8F2", opacity: 0.6 }}>
