@@ -341,7 +341,7 @@ export default function ProductPage() {
                 <ShoppingCart className="mr-2" /> Ajouter au panier
               </Button>
               <Button variant="outline" className="flex-1 border-[#CC6B2C] text-[#CC6B2C] hover:bg-[#FDF8F2] h-12 text-lg">
-                Acheter maintenant
+                Passer Commande
               </Button>
             </div>
 
