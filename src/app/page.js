@@ -2,13 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  ChevronRight,
-  Truck,
   Star,
-  Instagram,
   Heart,
   Shield,
   Handshake,
@@ -16,9 +13,13 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import HeroSection from "@/components/HeroSection";
+import CategoriesSection from "@/components/CategoriesSection";
+import NewArrivalsSection from "@/components/NewArrivals";
+import ArtisanatSection from "@/components/ArtisanatSection";
+import NewsletterSection from "@/components/NewsletterSection";
 
 // Couleurs définies
 const colors = {
@@ -46,75 +47,9 @@ const SectionHeading = ({ children }) => (
   </motion.h2>
 );
 
-const ProductCard = ({ product }) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.9 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true, amount: 0.3 }}
-    transition={{ duration: 0.5 }}
-    className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-shadow duration-300 cursor-pointer border border-gray-100"
-  >
-    <div className="relative w-full h-72 overflow-hidden">
-      <Image
-        src={product.image}
-        alt={product.name}
-        layout="fill"
-        objectFit="cover"
-        className="group-hover:scale-105 transition-transform duration-500"
-      />
-      {product.badge && (
-        <span
-          className="absolute top-3 left-3 text-white text-xs font-semibold px-3 py-1 rounded-full"
-          style={{ backgroundColor: colors.primary }}
-        >
-          {product.badge}
-        </span>
-      )}
-    </div>
-    <div className="p-4">
-      <h3 className="text-lg font-semibold mb-1" style={{ color: colors.dark }}>{product.name}</h3>
-      <p className="font-bold text-xl mb-2" style={{ color: colors.gold }}>{product.price}</p>
-      <Button
-        className="w-full transition-colors duration-300"
-        style={{ backgroundColor: colors.primary, color: colors.light }}
-      >
-        Ajouter au panier
-      </Button>
-    </div>
-  </motion.div>
-);
 
-const heroSlides = [
-  {
-    image: "/images/landing_1.jpg",
-    title: "L'Élégance Malienne au Quotidien",
-    subtitle: "Découvrez nos collections uniques inspirées par l'artisanat ancestral.",
-    cta: "Découvrir la Collection",
-    link: "/shop",
-  },
-  {
-    image: "/images/landing_2.jpg",
-    title: "Authenticité et Savoir-Faire",
-    subtitle: "Des tissus Bogolan et Bazin teints à la main, pour vous.",
-    cta: "Explorer les Tissus",
-    link: "/tissus",
-  },
-];
 
-const featuredCategories = [
-  { name: "Robes Bogolan", image: "/images/collection_robe_bogolan.jpg", link: "/category/bogolan" },
-  { name: "Tenues Homme Bazin", image: "/images/collection_bazin_homme.jpg", link: "/category/homme-bazin" },
-  { name: "Accessoires Traditionnels", image: "/images/collection_accesoire.jpg", link: "/category/accessoires" },
-  { name: "Mode Enfant", image: "/images/collection_enfant.jpg", link: "/category/enfant" },
-];
 
-const newArrivals = [
-  { id: 1, name: "Robe Bogolan Éclat", image: "/images/robe_bogolan.jpg", price: "45 000 XOF", badge: "Nouveau" },
-  { id: 2, name: "Ensemble Bazin Royal", image: "/images/ensemble_bazin.jpg", price: "60 000 XOF" },
-  { id: 3, name: "Tunique Homme Kente", image: "/images/tunique_home.png", price: "38 000 XOF", badge: "Populaire" },
-  { id: 4, name: "Jupe Pagnes Fleuris", image: "/images/jupe_pagne.jpg", price: "25 000 XOF" },
-  { id: 5, name: "Chemise Batik Safari", image: "/images/chemise_batik.jpg", price: "32 000 XOF" },
-];
 
 const testimonials = [
   {
@@ -174,8 +109,7 @@ const values = [
 ];
 
 export default function HomePage() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [email, setEmail] = useState("");
+
 
   return (
     <div className="font-sans" style={{ backgroundColor: colors.light }}>
@@ -184,69 +118,135 @@ export default function HomePage() {
         <HeroSection />
 
         {/* --- Valeurs --- */}
-        <section className="py-16" style={{ backgroundColor: colors.dark }}>
-          <div className="container mx-auto px-4 md:px-6">
-            <SectionHeading style={{ color: colors.light }}>Nos Valeurs</SectionHeading>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section className="py-20 relative overflow-hidden" style={{ backgroundColor: colors.dark }}>
+          {/* Fond animé */}
+          <div className="absolute inset-0 overflow-hidden opacity-10">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent via-purple-500 to-transparent animate-pulse"></div>
+          </div>
+
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
+            <SectionHeading
+              style={{ color: colors.light }}
+              className="mb-16 text-center"
+            >
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="inline-block text-[#D4AF37] font-bold text-4xl md:text-5xl mb-4"
+              >
+                L&lsquo;Excellence à Chaque Étape
+              </motion.span>
+            </SectionHeading>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {values.map((value, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 60, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white rounded-lg p-6 text-center shadow-lg"
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.15,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  whileHover={{ y: -10, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.2)" }}
+                  className="bg-white rounded-xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-300 border-t-4"
+                  style={{ borderTopColor: colors.primary }}
                 >
-                  <div className="flex justify-center mb-4" style={{ color: colors.primary }}>
-                    {value.icon}
-                  </div>
-                  <h3 className="text-xl font-bold mb-2" style={{ color: colors.dark }}>{value.title}</h3>
-                  <p className="text-gray-700">{value.description}</p>
+                  <motion.div
+                    className="flex justify-center mb-6"
+                    style={{ color: colors.primary }}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {React.cloneElement(value.icon, { size: 48 })}
+                  </motion.div>
+
+                  <h3
+                    className="text-2xl font-extrabold mb-4 bg-clip-text text-transparent"
+                    style={{
+                      color: colors.dark,
+                      backgroundImage: `linear-gradient(to right, ${colors.primary}, ${colors.secondary})`
+                    }}
+                  >
+                    {value.title}
+                  </h3>
+
+                  <p className="text-gray-600 text-lg leading-relaxed mb-4">
+                    {value.description}
+                  </p>
                 </motion.div>
               ))}
             </div>
+
+            {/* Call-to-action animé */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, type: "spring" }}
+              className="mt-20 text-center"
+            >
+              <motion.div
+                animate={{
+                  y: [0, -10, 0],
+                  boxShadow: [
+                    `0 4px 14px 0 rgba(${colors.primaryRGB}, 0.3)`,
+                    `0 6px 20px 0 rgba(${colors.primaryRGB}, 0.4)`,
+                    `0 4px 14px 0 rgba(${colors.primaryRGB}, 0.3)`
+                  ]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="inline-block"
+              >
+                <button
+                  className="px-12 py-4 rounded-full text-white font-bold text-lg tracking-wide uppercase"
+                  style={{
+                    background: `linear-gradient(45deg, ${colors.primary}, ${colors.secondary})`,
+                    boxShadow: `0 4px 14px 0 rgba(${colors.primaryRGB}, 0.3)`
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span className="flex items-center justify-center">
+                    Commander Maintenant
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 ml-2 animate-bounce-horizontal"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </span>
+                </button>
+              </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="mt-6 text-gray-300 italic"
+              >
+                Satisfaction garantie ou remboursé
+              </motion.p>
+            </motion.div>
           </div>
         </section>
 
         {/* --- Catégories --- */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4 md:px-6">
-            <SectionHeading>Nos Collections</SectionHeading>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredCategories.map((category, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="relative group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-                >
-                  <Link href={category.link}>
-                    <Image
-                      src={category.image}
-                      alt={category.name}
-                      width={400}
-                      height={300}
-                      className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
-                      <h3
-                        className="text-2xl font-bold text-white group-hover:text-gold transition-colors duration-300"
-                        style={{ color: colors.light }}
-                      >
-                        {category.name}
-                      </h3>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <CategoriesSection />
 
         {/* --- Nouveautés --- */}
-        <section className="py-16" style={{ backgroundColor: colors.light }}>
+        {/* <section className="py-16" style={{ backgroundColor: colors.light }}>
           <div className="container mx-auto px-4 md:px-6">
             <SectionHeading>Nouveautés</SectionHeading>
             <Carousel
@@ -264,55 +264,11 @@ export default function HomePage() {
               <CarouselNext />
             </Carousel>
           </div>
-        </section>
+        </section> */}
+        <NewArrivalsSection />
 
         {/* --- Notre Histoire --- */}
-        <section className="py-16 bg-white relative overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col lg:flex-row items-center gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.8 }}
-              className="lg:w-1/2"
-            >
-              <h2 className="text-3xl font-bold mb-6" style={{ color: colors.dark }}>
-                L&apos;Artisanat Malien à l&apos;Honneur
-              </h2>
-              <p className="text-gray-700 leading-relaxed mb-6">
-                Chez Mali Mode, nous célébrons la richesse et la diversité de l&apos;artisanat textile malien. Chaque pièce raconte une histoire, celle de générations de savoir-faire transmis, de pigments naturels et de motifs symboliques.
-              </p>
-              <p className="text-gray-700 leading-relaxed mb-6">
-                Nous travaillons en étroite collaboration avec des artisans locaux, garantissant des créations authentiques, éthiques et durables. Du mythique Bogolan au luxueux Bazin, nos vêtements sont un hommage à la culture malienne.
-              </p>
-              <Button
-                asChild
-                className="px-8 py-3 rounded-full transition-colors duration-300"
-                style={{ backgroundColor: colors.dark, color: colors.light }}
-              >
-                <Link href="/about">Découvrir notre histoire</Link>
-              </Button>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:w-1/2 flex justify-center"
-            >
-              <div className="relative w-full h-96 rounded-xl overflow-hidden shadow-2xl">
-                <Image
-                  src="/images/artisanat_malien.jpg"
-                  alt="Artisan Malien au travail"
-                  layout="fill"
-                  objectFit="cover"
-                  className="hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 border-4" style={{ borderColor: colors.gold }}></div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        <ArtisanatSection />
 
         {/* --- Témoignages --- */}
         <section className="py-16" style={{ backgroundColor: colors.light }}>
@@ -354,7 +310,7 @@ export default function HomePage() {
         </section>
 
         {/* --- Newsletter --- */}
-        <section className="py-16" style={{ backgroundColor: colors.primary }}>
+        {/* <section className="py-16" style={{ backgroundColor: colors.primary }}>
           <div className="container mx-auto px-4 md:px-6 text-center">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -384,7 +340,8 @@ export default function HomePage() {
               </div>
             </motion.div>
           </div>
-        </section>
+        </section> */}
+        <NewsletterSection />
 
         <section className="py-20 bg-[#FDF8F2]">
           <div className="container mx-auto px-4 md:px-6">
@@ -423,7 +380,7 @@ export default function HomePage() {
                   className="relative aspect-square overflow-hidden rounded-xl shadow-lg"
                 >
                   <Image
-                    src="/images/artisant_travaillant.jpg"
+                    src="/images/new_image3.jpeg"
                     alt="Artisan travaillant le bogolan"
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-500"
@@ -440,7 +397,7 @@ export default function HomePage() {
                   className="relative aspect-square overflow-hidden rounded-xl shadow-lg"
                 >
                   <Image
-                    src="/images/collection_moderne.jpg"
+                    src="/images/new_image4.jpeg"
                     alt="Collection moderne en bazin"
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-500"
@@ -457,7 +414,7 @@ export default function HomePage() {
                   className="relative aspect-square overflow-hidden rounded-xl shadow-lg"
                 >
                   <Image
-                    src="/images/model-mali-mode.jpg"
+                    src="/images/new_image5.jpeg"
                     alt="Modèle portant une création MaliMode"
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-500"
@@ -474,7 +431,7 @@ export default function HomePage() {
                   className="relative aspect-square overflow-hidden rounded-xl shadow-lg group"
                 >
                   <Image
-                    src="/images/atelier.jpg"
+                    src="/images/new_image6.jpeg"
                     alt="Atelier de tissage"
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"

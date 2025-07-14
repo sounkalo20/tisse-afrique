@@ -1,79 +1,49 @@
 "use client";
 
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
-const heroSlides = [
+const heroContent = [
   {
-    image: "/images/landing_5.jpg",
-    title: "L'Élégance Malienne au Quotidien",
-    subtitle: "Découvrez nos collections uniques inspirées par l'artisanat ancestral.",
-    cta: "Découvrir la Collection",
+    title: "L'Élégance Malienne Réinventée",
+    subtitle: "Des créations uniques où tradition et modernité s'entrelacent",
+    cta: "Explorer la Collection",
     link: "/shop",
   },
   {
-    image: "/images/landing_7.jpg",
-    title: "Authenticité et Savoir-Faire",
-    subtitle: "Des tissus Bogolan et Bazin teints à la main, pour vous.",
-    cta: "Explorer les Tissus",
-    link: "/tissus",
+    title: "Savoir-Faire Artisanal Exceptionnel",
+    subtitle: "Chaque pièce raconte une histoire, chaque détail compte",
+    cta: "Découvrir l'Artisanat",
+    link: "/artisanat",
   },
   {
-    image: "/images/landing_3.jpg",
-    title: "Modernité et Tradition",
-    subtitle: "Des designs contemporains qui célèbrent notre héritage culturel.",
+    title: "Luxe Authentique",
+    subtitle: "Des matières nobles transformées en œuvres portables",
     cta: "Voir les Nouveautés",
     link: "/new-arrivals",
   },
 ];
 
 const HeroSection = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentContent, setCurrentContent] = useState(0);
   const controls = useAnimation();
 
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
-    }, 7000);
+    }, 5000);
     return () => clearInterval(interval);
-  }, [currentSlide]);
+  }, [currentContent]);
 
   const handleNext = () => {
     controls.start("exit").then(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      setCurrentContent((prev) => (prev + 1) % heroContent.length);
       controls.start("enter");
     });
-  };
-
-  const handlePrev = () => {
-    controls.start("exit").then(() => {
-      setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-      controls.start("enter");
-    });
-  };
-
-  const goToSlide = (index) => {
-    controls.start("exit").then(() => {
-      setCurrentSlide(index);
-      controls.start("enter");
-    });
-  };
-
-  const slideVariants = {
-    enter: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 1.2, ease: [0.43, 0.13, 0.23, 0.96] }
-    },
-    exit: {
-      opacity: 0,
-      scale: 1.05,
-      transition: { duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }
-    }
   };
 
   const textVariants = {
@@ -82,112 +52,182 @@ const HeroSection = () => {
       opacity: 1, 
       y: 0,
       transition: { 
-        duration: 0.8, 
-        ease: [0.6, -0.05, 0.01, 0.99],
-        staggerChildren: 0.2
+        duration: 1, 
+        ease: [0.16, 1, 0.3, 1],
+        staggerChildren: 0.15
       }
+    },
+    exit: {
+      opacity: 0,
+      y: -50,
+      transition: { duration: 0.7, ease: [0.43, 0.13, 0.23, 0.96] }
     }
   };
 
   const itemVariants = {
     initial: { opacity: 0, y: 30 },
-    animate: { opacity: 1, y: 0 }
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        type: "spring",
+        damping: 12,
+        stiffness: 100
+      }
+    }
+  };
+
+  const ctaVariants = {
+    initial: { scale: 0.9, opacity: 0 },
+    animate: { 
+      scale: 1, 
+      opacity: 1,
+      transition: {
+        delay: 0.4,
+        type: "spring",
+        damping: 10,
+        stiffness: 200
+      }
+    },
+    hover: {
+      scale: 1.05,
+      transition: { duration: 0.3 }
+    },
+    tap: {
+      scale: 0.95
+    }
+  };
+
+  const pulseVariants = {
+    animate: {
+      scale: [1, 1.05, 1],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
   };
 
   return (
     <section className="relative w-full h-screen overflow-hidden">
-      {/* Navigation Dots */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
-        {heroSlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${currentSlide === index ? 'bg-[#D4AF37] w-6' : 'bg-white/50'}`}
-            aria-label={`Aller au slide ${index + 1}`}
+      {/* Video Background */}
+      <div className="absolute inset-0 w-full h-full">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="object-cover w-full h-full"
+        >
+          <source src="/videos/video_landing4.mp4" type="video/mp4" />
+          {/* Fallback image if video doesn't load */}
+          <Image
+            src="/images/landing_fallback.jpg"
+            alt="Background élégant"
+            fill
+            className="object-cover"
+            priority
+
           />
-        ))}
+        </video>
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      {/* Navigation Arrows */}
-      <button 
-        onClick={handlePrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/30 hover:bg-black/50 text-white transition-all duration-300"
-        aria-label="Slide précédent"
-      >
-        <ChevronRight className="rotate-180" size={24} />
-      </button>
-      <button 
-        onClick={handleNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/30 hover:bg-black/50 text-white transition-all duration-300"
-        aria-label="Slide suivant"
-      >
-        <ChevronRight size={24} />
-      </button>
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentSlide}
-          variants={slideVariants}
-          initial="exit"
-          animate="enter"
-          exit="exit"
-          className="absolute inset-0 w-full h-full"
-        >
-          <div className="absolute inset-0 w-full h-full">
-            <Image
-              src={heroSlides[currentSlide].image}
-              alt={heroSlides[currentSlide].title}
-              fill
-              priority={currentSlide === 0}
-              className="object-cover"
-              quality={100}
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-black/40" />
-          </div>
-
-          <motion.div 
-            className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 md:px-8 mx-auto max-w-7xl"
+      {/* Content */}
+      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 md:px-8 mx-auto max-w-7xl">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentContent}
             variants={textVariants}
             initial="initial"
             animate="animate"
+            exit="exit"
+            className="max-w-6xl"
           >
             <motion.h1
               variants={itemVariants}
-              className="text-4xl md:text-6xl font-bold text-white leading-tight mb-4 max-w-4xl"
+              className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6"
+              style={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}
             >
-              {heroSlides[currentSlide].title}
+              {heroContent[currentContent].title}
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="text-xl md:text-2xl text-white max-w-2xl mb-8"
+              className="text-2xl md:text-3xl text-white/90 max-w-3xl mb-10 mx-auto"
+              style={{ textShadow: '0 1px 5px rgba(0,0,0,0.2)' }}
             >
-              {heroSlides[currentSlide].subtitle}
+              {heroContent[currentContent].subtitle}
             </motion.p>
 
-            <motion.div variants={itemVariants}>
+            <motion.div
+              variants={ctaVariants}
+              whileHover="hover"
+              whileTap="tap"
+              className="inline-block"
+            >
               <Button
                 asChild
-                className="px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                className="px-10 py-6 text-xl rounded-full shadow-2xl font-semibold group"
                 style={{ 
                   backgroundColor: "#D4AF37",
                   color: "#1C2C49"
                 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
-                <Link href={heroSlides[currentSlide].link}>
-                  {heroSlides[currentSlide].cta} <ChevronRight className="ml-2" />
+                <Link href={heroContent[currentContent].link}>
+                  <span className="flex items-center">
+                    {heroContent[currentContent].cta}
+                    <motion.span
+                      variants={pulseVariants}
+                      animate="animate"
+                      className="ml-3 inline-block"
+                    >
+                      <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+                    </motion.span>
+                  </span>
                 </Link>
               </Button>
             </motion.div>
           </motion.div>
-        </motion.div>
-      </AnimatePresence>
+        </AnimatePresence>
+
+        {/* Navigation Dots */}
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 flex gap-3">
+          {heroContent.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                controls.start("exit").then(() => {
+                  setCurrentContent(index);
+                  controls.start("enter");
+                });
+              }}
+              className="relative p-1"
+              aria-label={`Aller au contenu ${index + 1}`}
+            >
+              <motion.span
+                className={`block w-3 h-3 rounded-full ${currentContent === index ? 'bg-[#D4AF37]' : 'bg-white/50'}`}
+                animate={{
+                  scale: currentContent === index ? [1, 1.3, 1] : 1
+                }}
+                transition={{ duration: 0.3 }}
+              />
+              {currentContent === index && (
+                <motion.span
+                  className="absolute inset-0 border-2 border-[#D4AF37] rounded-full"
+                  initial={{ scale: 1.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Overlay gradient */}
-      <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/60 to-transparent z-10" />
+      <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/70 to-transparent z-10" />
     </section>
   );
 };
