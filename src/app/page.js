@@ -310,37 +310,6 @@ export default function HomePage() {
         </section>
 
         {/* --- Newsletter --- */}
-        {/* <section className="py-16" style={{ backgroundColor: colors.primary }}>
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.7 }}
-              className="max-w-2xl mx-auto"
-            >
-              <h2 className="text-3xl font-bold mb-4 text-white">Restez informés</h2>
-              <p className="text-white mb-6">
-                Abonnez-vous à notre newsletter pour recevoir nos dernières collections, offres exclusives et inspirations.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <Input
-                  type="email"
-                  placeholder="Votre email"
-                  className="flex-grow py-3 px-4 rounded-full"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <Button
-                  className="py-3 px-6 rounded-full"
-                  style={{ backgroundColor: colors.dark, color: colors.light }}
-                >
-                  S&quot;abonner
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </section> */}
         <NewsletterSection />
 
         <section className="py-20 bg-[#FDF8F2]">
@@ -455,7 +424,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <Link
-                  href="/artisans"
+                  href="#"
                   className="px-6 py-3 rounded-lg bg-[#D4AF37] text-[#1C2C49] font-medium hover:bg-[#FDF8F2] transition-colors whitespace-nowrap"
                 >
                   Voir leur Travail
